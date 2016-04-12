@@ -10,8 +10,18 @@
   	<servlet-class>org.jwendell.cluster1.Hi</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>StoreInSession</servlet-name>
+    <servlet-class>org.jwendell.cluster1.StoreInSession</servlet-class>
+  </servlet>
+
   <servlet-mapping>
   	<servlet-name>Hi</servlet-name>
   	<url-pattern>/Hi</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>StoreInSession</servlet-name>
+    <url-pattern>/StoreInSession</url-pattern>
   </servlet-mapping>
 </web-app>
