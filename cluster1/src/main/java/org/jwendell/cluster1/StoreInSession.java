@@ -16,19 +16,15 @@ public class StoreInSession extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
-	    Object attribute = session.getAttribute(KEY);
-
-	    PrintWriter out = response.getWriter();
-	    out.print(String.valueOf(attribute));
-	}
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String value = request.getParameter(KEY);
-        session.setAttribute(KEY, value);
-
         PrintWriter out = response.getWriter();
-        out.print("OK");
-    }
+        String value = request.getParameter(KEY);
+
+        if (value == null || value.isEmpty()) {
+            Object attribute = session.getAttribute(KEY);
+            out.print(String.valueOf(attribute));
+        } else {
+            session.setAttribute(KEY, value);
+            out.print("OK");
+        }
+	}
 }
