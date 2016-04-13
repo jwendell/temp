@@ -29,6 +29,6 @@ public class StoreInSession extends HttpServlet {
         session.setAttribute(KEY, value);
 
         PrintWriter out = response.getWriter();
-        out.println("OK");
+        out.print("OK");
     }
 }
