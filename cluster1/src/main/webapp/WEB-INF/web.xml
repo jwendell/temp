@@ -14,6 +14,12 @@
     <servlet-name>StoreInSession</servlet-name>
     <servlet-class>org.jwendell.cluster1.StoreInSession</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ShowHeaders</servlet-name>
+  	<display-name>ShowHeaders</display-name>
+  	<description></description>
+  	<servlet-class>org.jwendell.cluster1.ShowHeaders</servlet-class>
+  </servlet>
 
   <servlet-mapping>
   	<servlet-name>Hi</servlet-name>
@@ -23,5 +29,9 @@
   <servlet-mapping>
     <servlet-name>StoreInSession</servlet-name>
     <url-pattern>/StoreInSession</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ShowHeaders</servlet-name>
+  	<url-pattern>/ShowHeaders</url-pattern>
   </servlet-mapping>
 </web-app>
