@@ -22,6 +22,15 @@ public class ShowHeaders extends HttpServlet {
 		    String headerName = e.nextElement();
 		    out.println(String.format("%s: %s", headerName, request.getHeader(headerName)));
 		}
+		out.println();
+		
+        for (Enumeration<String> e = request.getParameterNames(); e.hasMoreElements();) {
+            String paramName = e.nextElement();
+            out.println(String.format("%s: %s", paramName, request.getParameter(paramName)));
+        }
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    doGet(request, response);
+	}
 }

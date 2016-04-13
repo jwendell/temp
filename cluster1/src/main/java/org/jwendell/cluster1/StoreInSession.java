@@ -19,9 +19,7 @@ public class StoreInSession extends HttpServlet {
 	    Object attribute = session.getAttribute(KEY);
 
 	    PrintWriter out = response.getWriter();
-	    out.println(String.valueOf(attribute));
-        out.println("Cookie: " + request.getHeader("Cookie"));
-        out.println("Session: " + session.getId());
+	    out.print(String.valueOf(attribute));
 	}
 
     @Override
@@ -31,8 +29,6 @@ public class StoreInSession extends HttpServlet {
         session.setAttribute(KEY, value);
 
         PrintWriter out = response.getWriter();
-        out.println("OK - Added " + value);
-        out.println("Cookie: " + request.getHeader("Cookie"));
-        out.println("Session: " + session.getId());
+        out.println("OK");
     }
 }
