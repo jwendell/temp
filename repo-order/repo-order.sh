@@ -34,12 +34,15 @@ build() {
     cd "$OLDPWD"
 
     local time=$(echo "$output" | grep " Total time" | cut -d":" -f2,3)
-    local central=$(echo "$output" | grep 'Downloaded: ' | grep 'http://repo1.maven.org/maven2/' | wc -l)
-    local redhat=$(echo "$output" | grep 'Downloaded: ' | grep -v 'http://repo1.maven.org/maven2/' | wc -l)
+    local redhat=$(echo "$output" | grep 'Downloaded: ' | grep 'maven.repository.redhat.com' | wc -l)
+    local central=$(echo "$output" | grep 'Downloaded: ' | grep -v 'maven.repository.redhat.com' | wc -l)
+    local redhat_ga=$(echo "$output" | grep 'Downloaded: ' | grep 'maven.repository.redhat.com/ga/' | wc -l)
+    local redhat_ea=$(echo "$output" | grep 'Downloaded: ' | grep 'maven.repository.redhat.com/earlyaccess/all/' | wc -l)
+    local redhat_tp=$(echo "$output" | grep 'Downloaded: ' | grep 'maven.repository.redhat.com/techpreview/all/' | wc -l)
 
     rm -rf "$REPO"
     echo "Downloads from Maven Central: $central"
-    echo "Downloads from Red Hat:       $redhat"
+    echo "Downloads from Red Hat:       $redhat (ga: $redhat_ga / ea: $redhat_ea / tp: $redhat_tp)"
     echo "Done in $time."
     echo
 }
