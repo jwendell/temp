@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package envoy.extensions.filters.http.jwendell.v3;
+
+import "validate/validate.proto";
+
+message Decoder {
+    string header_key = 1 [(validate.rules).string.min_bytes = 1];
+    string header_value = 2 [(validate.rules).string.min_bytes = 1];
+}
