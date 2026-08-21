@@ -1,0 +1,37 @@
+# Reproducer for https://github.com/envoyproxy/envoy/issues/46841
+#
+# Two identical patched-Envoy instances differing only in the runtime guard:
+#   envoy-off (:10000) -> guard OFF  -> first request body frame dropped (the bug)
+#   envoy-on  (:10001) -> guard ON   -> body forwarded intact (the fix, shipped default)
+# Both proxy to a shared echo upstream that reflects the request body back.
+
+services:
+  echo:
+    image: mendhak/http-https-echo:31
+    environment:
+      HTTP_PORT: "8080"
+
+  envoy-off:
+    # Defaults to the published patched image; override with REPRO_IMAGE to use a local build,
+    # e.g. REPRO_IMAGE=envoy-patched:repro docker compose up -d
+    image: ${REPRO_IMAGE:-quay.io/jwendell/envoy:reproducer-46841}
+    command: ["-c", "/etc/envoy/envoy.yaml", "--service-cluster", "guard-off"]
+    volumes:
+      - ./envoy-guard-off.yaml:/etc/envoy/envoy.yaml:ro
+    ports:
+      - "10000:10000"
+      - "9901:9901"
+    depends_on:
+      - echo
+
+  envoy-on:
+    image: ${REPRO_IMAGE:-quay.io/jwendell/envoy:reproducer-46841}
+    command: ["-c", "/etc/envoy/envoy.yaml", "--service-cluster", "guard-on"]
+    volumes:
+      - ./envoy-guard-on.yaml:/etc/envoy/envoy.yaml:ro
+    ports:
+      - "10001:10000"
+      - "9902:9901"
+    depends_on:
+      - echo
+      - envoy-off
